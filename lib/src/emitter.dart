@@ -30,11 +30,12 @@ abstract class Emitter<T>
   }
   
   // creates and initialised a single particle
-  emit() {
+  T emit() {
     T p = create(id);
     physics.particles.add(p);
     init(p);
     id++;
+    return p;
   }
   
   // creates a new instance of the given particle type
