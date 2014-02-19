@@ -3,10 +3,10 @@ part of physics;
 /**
  * Keeps the particle inside the given 3D box 
  */
-class Box extends Constraint 
+class Box extends Constraint<Particle3> 
 {
-  var min = new Vector3.zero();
-  var max = new Vector3(100.0, 100.0, 100.0);
+  Vector3 min = new Vector3.zero();
+  Vector3 max = new Vector3(100.0, 100.0, 100.0);
 
   apply(Particle3 particle) {
     var pos = particle.position;
@@ -25,10 +25,10 @@ class Box extends Constraint
 /**
  * Wraps the particle inside the given 3D box 
  */
-class BoxWrap extends Constraint 
+class BoxWrap extends Constraint<Particle3> 
 {
-  var min = new Vector3.zero();
-  var max = new Vector3(100.0, 100.0, 100.0);
+  Vector3 min = new Vector3.zero();
+  Vector3 max = new Vector3(100.0, 100.0, 100.0);
 
   apply(Particle3 particle) {
     var pos = particle.position;
@@ -65,3 +65,4 @@ class BoxWrap extends Constraint
       particle.clearVelocity();
   }
 }
+

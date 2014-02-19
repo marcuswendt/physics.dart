@@ -1,6 +1,7 @@
 part of physics;
 
-abstract class Emitter<T> {
+abstract class Emitter<T> 
+{
   Physics physics;
   int rate = 1;
   int interval = 1;
@@ -20,23 +21,29 @@ abstract class Emitter<T> {
       
       int i = 0;
       while(i < rate && physics.particles.length < max) {
-        T p = create(id);
-        physics.particles.add(p);
-        init(p);
-        
-//        print("created particle $p id: $id i:$i");
-        id++;        
+        emit();
+//        print("created particle $p id: $id i:$i");        
         i++;
-        
       }
     }
     timer++;
   }
   
+  // creates and initialised a single particle
+  emit() {
+    T p = create(id);
+    physics.particles.add(p);
+    init(p);
+    id++;
+  }
+  
+  // creates a new instance of the given particle type
   T create(int id);
 }
 
-class Emitter3 extends Emitter<Particle3> {
+
+class Emitter3 extends Emitter<Particle3> 
+{
   Emitter3(physics) : super(physics);
   Particle3 create(int id) => new Particle3(id);
 }

@@ -1,6 +1,7 @@
 part of physics;
 
-class Behaviour<T> {
+class Behaviour<T> 
+{
   prepare() {}
   apply(T p) {}
 }
@@ -11,8 +12,8 @@ class Constraint<T> extends Behaviour<T> {}
 /**
  * core physics simulation class
  */
-class Physics {
-  
+class Physics 
+{  
   Space space;
   Emitter emitter;
   List<Particle> particles = [];

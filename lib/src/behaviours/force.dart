@@ -3,7 +3,7 @@ part of physics;
 /**
  * A constant force along a vector e.g. Gravity.
  */
-class Force3 extends Behaviour
+class Force3 extends Behaviour<Particle3>
 {
   Vector3 direction = new Vector3(0.0, 1.0, 0.0);
   double weight = 1.0;
