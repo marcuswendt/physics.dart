@@ -1,7 +1,7 @@
 part of physics;
 
 /** Verlet Spring */
-abstract class Spring<T>
+abstract class Spring<T extends Particle>
 {
 	T a;
 	T b;

@@ -15,6 +15,14 @@ abstract class Particle<T>
   int lifetime = -1;
   double drag = 0.03;
   
+  double _mass = 1.0;  
+  double _invMass = 1.0;
+  get mass => _mass;  
+  set mass(double value) {
+  	_mass = value;
+  	_invMass = 1.0 / _mass;
+  }
+
   T position;
   
   // Verlet style previous position  
@@ -22,7 +30,6 @@ abstract class Particle<T>
   
   // Euler
   T force;
-  T velocity;
 
   // Springs
   bool isLocked = false;
@@ -39,9 +46,17 @@ abstract class Particle<T>
   Particle(this.id);
   
   update() {}
+
+  // type dependend - implementations need to override these
+  applyForce(T force) {}
+
   scaleVelocity(double amount) {}
   clearVelocity() {}
-  setPosition(T position) {}
+
+  get velocity {}
+  set velocity(T velocity) {}
+ 
+  setPosition(T pos) {}
 }
 
 
@@ -75,9 +90,13 @@ class Particle3 extends Particle<Vector3>
     force.setZero();
   }
   
+  applyForce(Vector3 force) => this.force += force.scale(_invMass);
+
   scaleVelocity(double amount) => lerp3(prev, position, 1.0 - amount);
-  
   clearVelocity() => prev.setFrom(position);
+
+  get velocity => position - prev;
+  set velocity(Vector3 velocity) => prev.setFrom(position).add(velocity);
  
   setPosition(Vector3 pos) {
     position.setFrom(pos);
