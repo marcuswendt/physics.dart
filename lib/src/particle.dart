@@ -39,6 +39,7 @@ abstract class Particle<T>
   Particle(this.id);
   
   update() {}
+  scaleVelocity(double amount) {}
   clearVelocity() {}
   setPosition(T position) {}
 }
@@ -74,7 +75,9 @@ class Particle3 extends Particle<Vector3>
     force.setZero();
   }
   
-  clearVelocity() { prev.setFrom(position); }
+  scaleVelocity(double amount) => lerp3(prev, position, 1.0 - amount);
+  
+  clearVelocity() => prev.setFrom(position);
  
   setPosition(Vector3 pos) {
     position.setFrom(pos);
