@@ -1,7 +1,7 @@
 part of physics;
 
 /**
- * Keeps the particle inside the given 3D box 
+ * Keeps the particle inside the given box shape
  */
 class Box extends Constraint<Particle3> 
 {
@@ -23,7 +23,7 @@ class Box extends Constraint<Particle3>
 
 
 /**
- * Wraps the particle inside the given 3D box 
+ * Wraps the particle inside the given box shape
  */
 class BoxWrap extends Constraint<Particle3> 
 {
@@ -66,3 +66,35 @@ class BoxWrap extends Constraint<Particle3>
   }
 }
 
+
+/**
+ * Keeps the particle inside the given sphere
+ */
+class Sphere extends Constraint<Particle3>
+{
+  // settings
+  Vector3 position = new Vector3.zero();
+  double radius;
+  bool isBouncy;
+
+  // internal
+  double _radiusSq;
+
+  Sphere([this.radius = 100.0, this.isBouncy = true]);
+
+  prepare() => _radiusSq = radius * radius;
+
+  apply(Particle3 particle) {
+    Vector3 delta = particle.position - position;
+    double distSq = delta.length2;
+
+    if(distSq >= _radiusSq) {
+      Vector3 constrained = position + delta.normalize().scale(radius);
+      if(isBouncy) {
+        particle.position.setFrom(constrained); // bouncy
+      } else { 
+        particle.setPosition(constrained); // no-bounce
+      }
+    }
+  }
+}
