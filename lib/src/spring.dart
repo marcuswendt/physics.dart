@@ -22,12 +22,12 @@ class Spring3 extends Spring<Particle3>
 
 	update() {
 		Vector3 delta = b.position - a.position;
-    	double dist = delta.length() + double.MIN_POSITIVE;
+    	double dist = delta.length + double.MIN_POSITIVE;
     	double normDistStrength = (dist - restLength) / dist * strength;
 
 	    if(normDistStrength == 0) return;
 
-    	delta.sale(normDistStrength);
+    	delta.scale(normDistStrength);
 
     	if(!a.isLocked) 
       		a.position.add(delta);
