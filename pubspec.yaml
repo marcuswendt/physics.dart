@@ -1,6 +1,6 @@
 name: physics
 author: Marcus Wendt <marcus@field.io>
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/field/physics.dart
 description: 2D + 3D Particle Physics Simulation for Dart
 dependencies:

@@ -1,6 +1,6 @@
 part of physics;
 
-abstract class Emitter<T> 
+class Emitter 
 {
   Physics physics;
   int rate = 1;
@@ -11,7 +11,7 @@ abstract class Emitter<T>
   int id = 0;
   
   // initialiser function
-  Function init = (T p) {};
+  Function init = (Particle p) {};
   
   Emitter(this.physics);
   
@@ -30,8 +30,8 @@ abstract class Emitter<T>
   }
   
   // creates and initialised a single particle
-  T emit() {
-    T p = create(id);
+  Particle emit() {
+    Particle p = create(id);
     physics.particles.add(p);
     init(p);
     id++;
@@ -39,12 +39,5 @@ abstract class Emitter<T>
   }
   
   // creates a new instance of the given particle type
-  T create(int id);
-}
-
-
-class Emitter3 extends Emitter<Particle3> 
-{
-  Emitter3(physics) : super(physics);
-  Particle3 create(int id) => new Particle3(id);
+  Particle create(int id) => new Particle(id);
 }

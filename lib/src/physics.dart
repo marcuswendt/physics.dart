@@ -1,12 +1,12 @@
 part of physics;
 
-class Behaviour<T> 
+abstract class Behaviour 
 {
   prepare() {}
-  apply(T p) {}
+  apply(Particle p) {}
 }
 
-class Constraint<T> extends Behaviour<T> {}
+abstract class Constraint extends Behaviour {}
 
 
 /**
@@ -28,7 +28,7 @@ class Physics
   
   Physics() {
     space = new Space3();
-    emitter = new Emitter3(this); 
+    emitter = new Emitter(this); 
   }
   
   addEffector(Behaviour effector, [int state=Particle.ALIVE]) {

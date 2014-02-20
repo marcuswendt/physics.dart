@@ -3,12 +3,12 @@ part of physics;
 /**
  * Keeps the particle inside the given box shape
  */
-class Box extends Constraint<Particle3> 
+class Box extends Constraint 
 {
   Vector3 min = new Vector3.zero();
   Vector3 max = new Vector3(100.0, 100.0, 100.0);
 
-  apply(Particle3 particle) {
+  apply(Particle particle) {
     var pos = particle.position;
 
     if(pos.x < min.x) pos.x = min.x;
@@ -25,12 +25,12 @@ class Box extends Constraint<Particle3>
 /**
  * Wraps the particle inside the given box shape
  */
-class BoxWrap extends Constraint<Particle3> 
+class BoxWrap extends Constraint 
 {
   Vector3 min = new Vector3.zero();
   Vector3 max = new Vector3(100.0, 100.0, 100.0);
 
-  apply(Particle3 particle) {
+  apply(Particle particle) {
     var pos = particle.position;
     var wrapped = false;
     
@@ -70,7 +70,7 @@ class BoxWrap extends Constraint<Particle3>
 /**
  * Keeps the particle inside the given sphere
  */
-class Sphere extends Constraint<Particle3>
+class Sphere extends Constraint
 {
   // settings
   Vector3 position = new Vector3.zero();
@@ -84,7 +84,7 @@ class Sphere extends Constraint<Particle3>
 
   prepare() => _radiusSq = radius * radius;
 
-  apply(Particle3 particle) {
+  apply(Particle particle) {
     Vector3 delta = particle.position - position;
     double distSq = delta.length2;
 

@@ -7,7 +7,7 @@ part of physics;
  * Supports Verlet-style integration for 'strict' relationships e.g. Springs + Constraints
  * and also Euler-style continous force integration for smooth/ flowing behaviour e.g. Flocking
  */
-abstract class Particle<T> 
+class Particle 
 {
   int id = 0;
   int state = ALIVE;
@@ -15,21 +15,19 @@ abstract class Particle<T>
   int lifetime = -1;
   double drag = 0.03;
   
-  double _mass = 1.0;  
-  double _invMass = 1.0;
   get mass => _mass;  
   set mass(double value) {
   	_mass = value;
   	_invMass = 1.0 / _mass;
   }
 
-  T position;
+  Vector3 position = new Vector3.zero();
   
   // Verlet style previous position  
-  T prev;
+  Vector3 prev = new Vector3.zero();
   
   // Euler
-  T force;
+  Vector3 force = new Vector3.zero();
 
   // Springs
   bool isLocked = false;
@@ -41,39 +39,11 @@ abstract class Particle<T>
   static const DEAD = 3;  
 
   // internal 
-  T tmp_;
+  Vector3 tmp_ = new Vector3.zero();
+  double _mass = 1.0;  
+  double _invMass = 1.0;
   
   Particle(this.id);
-  
-  update() {}
-
-  // type dependend - implementations need to override these
-  applyForce(T force) {}
-
-  scaleVelocity(double amount) {}
-  clearVelocity() {}
-
-  get velocity {}
-  set velocity(T velocity) {}
- 
-  setPosition(T pos) {}
-}
-
-
-/**
- * 3D VerLer Particle
- */
-class Particle3 extends Particle<Vector3>
-{
-  Particle3(int id) : super(id) 
-  {
-    position = new Vector3.zero();
-    prev = new Vector3.zero();
-    force = new Vector3.zero();
-    velocity = new Vector3.zero();
-    
-    tmp_ = new Vector3.zero();
-  }
   
   update() 
   {
