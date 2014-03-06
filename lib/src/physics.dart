@@ -42,16 +42,16 @@ class Physics
     
     // apply behaviours
     applyEffectors(behaviours);
-    
-    // apply constraints
-    for(int i=0; i<constraintIterations; i++) {
-      applyEffectors(constraints);
-      
-      for(int j=0; j<springIterations; j++) {
-        for(Spring s in springs)
-          s.update();
-      }
+
+    // update springs
+    for(int j=0; j<springIterations; j++) {
+      for(Spring s in springs)
+        s.update();
     }
+
+    // apply constraints
+    for(int i=0; i<constraintIterations; i++)
+      applyEffectors(constraints);
     
     // update particles
     particles.forEach((Particle p) => p.update());

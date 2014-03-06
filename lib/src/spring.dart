@@ -1,6 +1,8 @@
 part of physics;
 
-/** Verlet Spring */
+/** 
+ * Verlet Spring 
+ */
 class Spring
 {
 	Particle a;
@@ -13,18 +15,18 @@ class Spring
 	}
 
 	update() {
-    Vector3 delta = b.position - a.position;
-      double dist = delta.length + double.MIN_POSITIVE;
-      double normDistStrength = (dist - restLength) / dist * strength;
+		Vector3 delta = b.position - a.position;
+		double dist = delta.length + double.MIN_POSITIVE;
+		double normDistStrength = (dist - restLength) / dist * strength;
 
-      if(normDistStrength == 0) return;
+		if(normDistStrength == 0) return;
 
-      delta.scale(normDistStrength);
+		delta.scale(normDistStrength);
 
-      if(!a.isLocked) 
-          a.position.add(delta);
-      
-      if(!b.isLocked) 
-          b.position.sub(delta);
-  }
+		if(!a.isLocked) 
+			a.position.add(delta);
+
+		if(!b.isLocked) 
+			b.position.sub(delta);
+	}
 }
