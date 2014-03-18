@@ -32,18 +32,39 @@ class DirectionalForce extends Behaviour
 
 
 /**
- * A simple single point based attractor 
+ * A simple single point + radius based attractor 
  */
 class AttractorForce extends Behaviour
 {
   Vector3 target = new Vector3.zero();
   double weight = 1.0;
   
+  double _radius;
+  double _radiusSq;
+  
   Vector3 _tmp = new Vector3.zero();
   
+  AttractorForce([double radius=100.0]) {
+    this.radius = radius;
+  }
+ 
+  set radius(double value) {
+      _radius = value;
+      _radiusSq = _radius * _radius;
+    }
+    
+  get radius => _radius;
+    
   apply(Particle particle)
   {
-    _tmp.setFrom(target).sub(particle.position).scale(weight);  
-    particle.position.add(_tmp);
+    _tmp.setFrom(target).sub(particle.position);
+    double distSq = _tmp.length2;
+    
+    if(distSq < _radiusSq) {
+      double dist = sqrt(distSq);
+      _tmp.scale( (1.0 / dist) * (1.0 - dist/ radius) * weight);
+      particle.position.add(_tmp);
+//      particle.force.add(_tmp); // ?
+    }    
   }
 }

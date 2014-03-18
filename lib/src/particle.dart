@@ -14,6 +14,7 @@ class Particle
   int age = 0;
   int lifetime = -1;
   double drag = 0.03;
+  double size = 1.0;
   
   get mass => _mass;  
   set mass(double value) {

@@ -10,7 +10,7 @@ abstract class Constraint extends Behaviour {}
 
 
 /**
- * core physics simulation class
+ * Core Physics Simulation Class
  */
 class Physics 
 {  
@@ -27,7 +27,7 @@ class Physics
   int springIterations = 1;
   
   Physics() {
-    space = new Space3();
+    space = new Space(this);
     emitter = new Emitter(this); 
   }
   
@@ -38,7 +38,10 @@ class Physics
   }
   
   update(num dt) {
+
     emitter.update(dt);
+    
+    space.update();
     
     // apply behaviours
     applyEffectors(behaviours);
