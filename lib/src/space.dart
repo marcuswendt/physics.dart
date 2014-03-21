@@ -1,18 +1,27 @@
 part of physics;
 
+
 /**
- * Simple brute force spatial searches.
+ * Base class for all types of spatial search implementations.
  * Subclasses may override this to organise particles so they can be found more efficiently.
  */
-class Space
+abstract class Space
 {
-  Vector3 dimensions = new Vector3.zero();
-  
+  Vector3 dimensions = new Vector3(100.0, 100.0, 100.0);
+  Space();
+  update(Physics physics) {}
+  List<Particle> search(Vector3 center, double radius);
+}
+
+
+/**
+ * simple brute force spatial searches.
+ */
+class BasicSpace extends Space
+{
   Physics _physics;
   
-  Space(this._physics);
-  
-  update() {}
+  BasicSpace(this._physics);
   
   List<Particle> search(Vector3 center, double radius) 
   {

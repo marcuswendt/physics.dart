@@ -27,7 +27,7 @@ class Physics
   int springIterations = 1;
   
   Physics() {
-    space = new Space(this);
+    space = new BasicSpace(this);
     emitter = new Emitter(this); 
   }
   
@@ -41,7 +41,7 @@ class Physics
 
     emitter.update(dt);
     
-    space.update();
+    space.update(this);
     
     // apply behaviours
     applyEffectors(behaviours);
