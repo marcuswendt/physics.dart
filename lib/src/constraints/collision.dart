@@ -25,7 +25,7 @@ class Collision extends Constraint
       double radiusSq = radius * radius;
       
       if(distSq < radiusSq) {
-        var dist = sqrt(distSq);
+        var dist = Math.sqrt(distSq);
         _tmp.scale( (dist - radius) / radius * bouncyness);
         particle.position.add(_tmp);
         neighbour.position.sub(_tmp);

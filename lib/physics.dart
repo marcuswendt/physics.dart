@@ -1,9 +1,15 @@
 /**
- * FIELD Physics System for Dart
- */
+      _____  __  _____  __     ____
+     / ___/ / / /____/ / /    /    \   physics.dart
+    / ___/ /_/ /____/ / /__  /  /  /   (c) 2014, FIELD. All rights reserved.
+   /_/        /____/ /____/ /_____/    http://www.field.io
+
+   Created by Marcus Wendt on 23/03/2014
+   
+*/
 library physics;
 
-import 'dart:math';
+import 'dart:math' as Math;
 import 'package:vector_math/vector_math.dart';
 
 part 'src/physics.dart';

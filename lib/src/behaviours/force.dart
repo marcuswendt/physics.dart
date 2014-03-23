@@ -61,7 +61,7 @@ class AttractorForce extends Behaviour
     double distSq = _tmp.length2;
     
     if(distSq < _radiusSq) {
-      double dist = sqrt(distSq);
+      double dist = Math.sqrt(distSq);
       _tmp.scale( (1.0 / dist) * (1.0 - dist/ radius) * weight);
       particle.position.add(_tmp);
 //      particle.force.add(_tmp); // ?

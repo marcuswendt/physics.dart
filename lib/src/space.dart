@@ -58,6 +58,7 @@ class SpatialHash extends Space
   List<SpatialHashCell> _cells = new List<SpatialHashCell>();
   double _cellSize;
   int _cellsX, _cellsY, _cellsZ;
+  int _cellsXY;
   
   SpatialHash();
   
@@ -74,8 +75,9 @@ class SpatialHash extends Space
     _cellsY = hash(dimension.y);
     _cellsZ = hash(dimension.z);
     
+    _cellsXY = _cellsX * _cellsY;
+    
     int ncells = _cellsX * _cellsY * _cellsZ;
-//    print("init hash cells $_cellsX $_cellsY $_cellsZ ncells $ncells");
     for(int i=0; i<ncells; i++) {
       _cells.add(new SpatialHashCell());
     }
@@ -100,7 +102,7 @@ class SpatialHash extends Space
       int hashY = hash(p.y);
       int hashZ = hash(p.z);
       
-      int index = hashX + _cellsX * hashY + _cellsX * _cellsY * hashZ;
+      int index = hashX + _cellsX * hashY + _cellsXY * hashZ;
       
       if(index < 0 || index > _cells.length) {
 //        print("couldnt fit particle ${particle.position}");
@@ -138,7 +140,7 @@ class SpatialHash extends Space
       for(int iy=sy; iy<ey; iy++) {
         for(int ix=sx; ix<ex; ix++) 
         {
-           index = ix + _cellsX * iy + _cellsX * _cellsY * iz;
+           index = ix + _cellsX * iy + _cellsXY * iz;
            result.addAll(_cells[index].spatials);
         }
       }
