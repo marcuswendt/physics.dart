@@ -9,8 +9,8 @@ abstract class Effector<P extends Particle>
   apply(P p);
 }
 
-abstract class Behaviour extends Effector {}
-abstract class Constraint extends Effector {}
+abstract class Behaviour<P extends Particle> extends Effector<P> {}
+abstract class Constraint<P extends Particle> extends Effector<P> {}
 
 
 /**
@@ -71,8 +71,8 @@ class Physics<P extends Particle, S extends Spring>
   applyEffectors(Map effectors)
   {
     // go through all states in effectors list
-    effectors.forEach((int state, List<Behaviour> stateEffectors) {
-      for(Behaviour effector in stateEffectors) {
+    effectors.forEach((int state, List<Effector> stateEffectors) {
+      for(Effector effector in stateEffectors) {
         effector.prepare();
         
         for(P p in particles) {
