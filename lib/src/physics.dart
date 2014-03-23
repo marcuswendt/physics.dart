@@ -1,23 +1,27 @@
 part of physics;
 
-abstract class Behaviour 
+/**
+ * Base class for all physical behaviour, forces and constraint effectors.
+ */
+abstract class Effector 
 {
   prepare() {}
-  apply(Particle p) {}
+  apply(Particle p);
 }
 
-abstract class Constraint extends Behaviour {}
+abstract class Behaviour extends Effector {}
+abstract class Constraint extends Effector {}
 
 
 /**
  * Core Physics Simulation Class
  */
-class Physics 
+class Physics<P extends Particle, S extends Spring>
 {  
   Space space;
   Emitter emitter;
-  List<Particle> particles = [];
-  List<Spring> springs = [];
+  List<P> particles = [];
+  List<S> springs = [];
   
   Map behaviours = new Map();
   
@@ -31,7 +35,7 @@ class Physics
     emitter = new Emitter(this); 
   }
   
-  addEffector(Behaviour effector, [int state=Particle.ALIVE]) {
+  addEffector(Effector effector, [int state=Particle.ALIVE]) {
     var list = (effector is Constraint) ? constraints : behaviours;
     if(list[state] == null) list[state] = [];
     list[state].add(effector);
@@ -48,7 +52,7 @@ class Physics
 
     // update springs
     for(int j=0; j<springIterations; j++) {
-      for(Spring s in springs)
+      for(S s in springs)
         s.update();
     }
 
@@ -57,10 +61,10 @@ class Physics
       applyEffectors(constraints);
     
     // update particles
-    particles.forEach((Particle p) => p.update());
+    particles.forEach((P p) => p.update());
     
     // remove dead
-    particles.removeWhere((Particle p) => p.state == Particle.DEAD);
+    particles.removeWhere((P p) => p.state == Particle.DEAD);
   }
   
   // applies all effectors to the given particle list when their states match
@@ -71,7 +75,7 @@ class Physics
       for(Behaviour effector in stateEffectors) {
         effector.prepare();
         
-        for(Particle p in particles) {
+        for(P p in particles) {
           if(p.state == state && !p.isLocked)
             effector.apply(p);
         }

@@ -1,6 +1,10 @@
 part of physics;
 
-class Emitter 
+/**
+ * Creates new particle instances in regular intervals or on demand.
+ * If you want to change the type, override the create method.
+ */
+class Emitter<T extends Particle>
 {
   Physics physics;
   int rate = 1;
@@ -11,7 +15,7 @@ class Emitter
   int id = 0;
   
   // initialiser function
-  Function init = (Particle p) {};
+  Function init = (T p) {};
   
   Emitter(this.physics);
   
@@ -30,8 +34,8 @@ class Emitter
   }
   
   // creates and initialised a single particle
-  Particle emit() {
-    Particle p = create(id);
+  T emit() {
+    T p = create(id);
     physics.particles.add(p);
     init(p);
     id++;
@@ -39,5 +43,5 @@ class Emitter
   }
   
   // creates a new instance of the given particle type
-  Particle create(int id) => new Particle(id);
+  T create(int id) => new Particle(id);
 }
