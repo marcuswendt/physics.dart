@@ -13,7 +13,10 @@ class Emitter<T extends Particle>
   
   int timer = -1;
   int id = 0;
-  
+
+  // creates a new instance of the given particle type
+  Function create = (int id) => new Particle(id);
+
   // initialiser function
   Function init = (T p) {};
   
@@ -41,7 +44,4 @@ class Emitter<T extends Particle>
     id++;
     return p;
   }
-  
-  // creates a new instance of the given particle type
-  T create(int id) => new Particle(id);
 }
