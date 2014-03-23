@@ -3,10 +3,10 @@ part of physics;
 /**
  * Base class for all physical behaviour, forces and constraint effectors.
  */
-abstract class Effector 
+abstract class Effector<P extends Particle> 
 {
   prepare() {}
-  apply(Particle p);
+  apply(P p);
 }
 
 abstract class Behaviour extends Effector {}
@@ -19,7 +19,7 @@ abstract class Constraint extends Effector {}
 class Physics<P extends Particle, S extends Spring>
 {  
   Space space;
-  Emitter emitter;
+  Emitter<P> emitter;
   List<P> particles = [];
   List<S> springs = [];
   
@@ -32,7 +32,7 @@ class Physics<P extends Particle, S extends Spring>
   
   Physics() {
     space = new BasicSpace(this);
-    emitter = new Emitter(this); 
+    emitter = new Emitter<P>(this); 
   }
   
   addEffector(Effector effector, [int state=Particle.ALIVE]) {
