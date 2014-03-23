@@ -3,7 +3,7 @@ part of physics;
 /**
  * Keeps the particle inside the given box shape
  */
-class Box extends Constraint 
+class BoxConstraint extends Constraint 
 {
   Vector3 min = new Vector3.zero();
   Vector3 max = new Vector3(100.0, 100.0, 100.0);
@@ -70,7 +70,7 @@ class BoxWrap extends Constraint
 /**
  * Keeps the particle inside the given sphere
  */
-class Sphere extends Constraint
+class SphereConstraint extends Constraint
 {
   // settings
   Vector3 position = new Vector3.zero();
@@ -80,7 +80,7 @@ class Sphere extends Constraint
   // internal
   double _radiusSq;
 
-  Sphere([this.radius = 100.0, this.isBouncy = true]);
+  SphereConstraint({this.radius: 100.0, this.isBouncy: true});
 
   prepare() => _radiusSq = radius * radius;
 
