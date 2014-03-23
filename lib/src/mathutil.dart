@@ -1,6 +1,11 @@
 part of physics;
 
-void lerp3(Vector3 a, Vector3 b, double delta) {
+/** linear interpolation */
+double lerp(double a, double b, double delta) => a * (1 - delta) + b * delta;
+
+
+/** linear interpolation between two Vector3s */
+lerp3(Vector3 a, Vector3 b, double delta) {
   double complement = 1 - delta;
   a.x = a.x * complement + b.x * delta;
   a.y = a.y * complement + b.y * delta;
