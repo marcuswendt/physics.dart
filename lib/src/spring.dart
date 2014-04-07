@@ -9,9 +9,19 @@ class Spring
 	Particle b;
 	double strength = 1.0;
 	double restLength = 0.0;
-
-	Spring(this.a, this.b) {
-		restLength = a.position.distanceTo(b.position);
+	
+	Spring() {}
+	
+	Spring.betweenParticles(Particle a, Particle b) { setParticles(a, b); }
+	
+	setParticles(Particle a, Particle b) {
+    this.a = a;
+    this.b = b;
+    reset();
+	}
+	
+	reset() {
+	  restLength = a.position.distanceTo(b.position);
 	}
 
 	update() {

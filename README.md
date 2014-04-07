@@ -1,10 +1,10 @@
 ```
-   _____  __  _____  __     ____
-  / ___/ / / /____/ / /    /    \   physics.dart
- / ___/ /_/ /____/ / /__  /  /  /   (c) 2014, FIELD. All rights reserved.
-/_/        /____/ /____/ /_____/    http://www.field.io
+      _____    __    _____    __       ____
+     / ___/   / /   /____/   / /      /    \    physics.dart
+    / ___/   / /   /____/   / /__    /  /  /    (c) 2014, FIELD. All rights reserved.
+   /_/      /_/   /____/   /____/   /_____/     http://www.field.io
 
-Created by Marcus Wendt on 23/03/2014
+   Created by Marcus Wendt on 23/03/2014
 
 ```
   
