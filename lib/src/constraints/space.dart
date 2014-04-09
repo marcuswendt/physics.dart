@@ -1,6 +1,27 @@
 part of physics;
 
 /**
+ * Keeps the particle locked on the given plane
+ */
+class PlaneConstraint extends Constraint
+{
+  static const int AXIS_X = 0;
+  static const int AXIS_Y = 1;
+  static const int AXIS_Z = 2;
+  
+  int axis;
+  double plane = 0.0;
+  
+  PlaneConstraint([this.axis=AXIS_Z, this.plane = 0.0]);
+  
+  apply(Particle p) {
+    p.position.storage[axis] = plane;
+  }
+}
+
+
+
+/**
  * Keeps the particle inside the given box shape
  */
 class BoxConstraint extends Constraint 
