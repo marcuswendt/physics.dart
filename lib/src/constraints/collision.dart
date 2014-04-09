@@ -19,16 +19,16 @@ class Collision extends Constraint
     
     for(Particle neighbour in neighbours) {
       _tmp.setFrom(neighbour.position).sub(position);
-      double distSq = _tmp.length2;
+      var distSq = _tmp.length2;
       
-      double radius = particle.size + neighbour.size;
-      double radiusSq = radius * radius;
+      var radius = (particle.size + neighbour.size) * .5 + double.MIN_POSITIVE;
+      var radiusSq = radius * radius;
       
       if(distSq < radiusSq) {
         var dist = Math.sqrt(distSq);
         _tmp.scale( (dist - radius) / radius * bouncyness);
         particle.position.add(_tmp);
-        neighbour.position.sub(_tmp);
+        if(!neighbour.isLocked) neighbour.position.sub(_tmp);
       }
     }
   }
