@@ -54,6 +54,7 @@ class SpatialHashCell {
 class SpatialHash extends Space
 {
   Aabb3 aabb;
+  int maxResults = 1000;
   
   List<SpatialHashCell> _cells = new List<SpatialHashCell>();
   double _cellSize;
@@ -61,6 +62,10 @@ class SpatialHash extends Space
   int _cellsXY;
   
   SpatialHash();
+
+  // Accessors
+  double get cellSize => _cellSize;
+  set cellSize(double value) => init(aabb.center, aabb.max - aabb.min, value);
   
   init(Vector3 offset, Vector3 dimension, double cellSize)
   {
@@ -108,7 +113,10 @@ class SpatialHash extends Space
 //        print("couldnt fit particle ${particle.position}");
         return;
       }
-      _cells[index].spatials.add(particle);
+      
+      var spatials = _cells[index].spatials;
+      if(spatials.length < maxResults)
+        spatials.add(particle);
     }
   }
   
