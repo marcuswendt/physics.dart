@@ -68,3 +68,25 @@ class AttractorForce extends Behaviour
     }    
   }
 }
+
+
+/**
+ * Rotates the particle around a given axis
+ */
+class VortexForce extends Behaviour
+{
+  Vector3 axis = new Vector3(0.0, 1.0, 0.0);
+  Vector3 center = new Vector3.zero();
+  double weight = 1.0;
+  double radius = 100.0;
+  
+  @override
+  apply(Particle p) {
+    var dist = p.position.distanceTo(center);
+    if(dist < radius) {
+      var orbit = p.position.cross(axis);
+      var invDist = 1.0 / dist;
+      p.position.add(orbit.scale(invDist * weight));
+    }
+  }
+}
