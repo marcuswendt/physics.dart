@@ -66,7 +66,7 @@ class Particle
   scaleVelocity(double amount) => lerp3(prev, position, 1.0 - amount);
   clearVelocity() => prev.setFrom(position);
 
-  get velocity => position - prev;
+  Vector3 get velocity => position - prev;
   set velocity(Vector3 velocity) => prev.setFrom(position).add(velocity);
  
   setPosition(Vector3 pos) {

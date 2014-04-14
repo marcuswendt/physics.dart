@@ -16,7 +16,7 @@ abstract class Constraint<P extends Particle> extends Effector<P> {}
 /**
  * Core Physics Simulation Class
  */
-class Physics<P extends Particle, S extends Spring>
+class Physics<P extends Particle, S extends Spring<P>>
 {  
   Space space;
   Emitter<P> emitter;

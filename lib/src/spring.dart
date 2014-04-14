@@ -3,18 +3,18 @@ part of physics;
 /** 
  * Verlet Spring 
  */
-class Spring
+class Spring<P extends Particle>
 {
-	Particle a;
-	Particle b;
+	P a;
+	P b;
 	double strength = 1.0;
 	double restLength = 0.0;
 	
 	Spring() {}
 	
-	Spring.betweenParticles(Particle a, Particle b) { setParticles(a, b); }
+	Spring.betweenParticles(P a, P b) { setParticles(a, b); }
 	
-	setParticles(Particle a, Particle b) {
+	setParticles(P a, P b) {
     this.a = a;
     this.b = b;
     reset();
