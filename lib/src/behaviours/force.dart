@@ -82,10 +82,10 @@ class VortexForce extends Behaviour
   
   @override
   apply(Particle p) {
-    var dist = p.position.distanceTo(center);
+    var dist = p.position.distanceTo(center) + double.MIN_POSITIVE;
     if(dist < radius) {
       var orbit = p.position.cross(axis);
-       var invDist = 1.0 / (dist + double.MIN_POSITIVE);
+      var invDist = 1.0 / dist;
       p.position.add(orbit.scale(invDist * weight));
     }
   }
