@@ -60,11 +60,10 @@ class AttractorForce extends Behaviour
     _tmp.setFrom(target).sub(particle.position);
     double distSq = _tmp.length2;
     
-    if(distSq < _radiusSq) {
-      double dist = Math.sqrt(distSq + double.MIN_POSITIVE);
+    if(distSq < _radiusSq && distSq > double.MIN_POSITIVE) {
+      double dist = Math.sqrt(distSq);
       _tmp.scale( (1.0 / dist) * (1.0 - dist/ radius) * weight);
       particle.position.add(_tmp);
-//      particle.force.add(_tmp); // ?
     }    
   }
 }
@@ -82,8 +81,8 @@ class VortexForce extends Behaviour
   
   @override
   apply(Particle p) {
-    var dist = p.position.distanceTo(center) + double.MIN_POSITIVE;
-    if(dist < radius) {
+    var dist = p.position.distanceTo(center);
+    if(dist < radius && dist > double.MIN_POSITIVE) {
       var orbit = p.position.cross(axis);
       var invDist = 1.0 / dist;
       p.position.add(orbit.scale(invDist * weight));
