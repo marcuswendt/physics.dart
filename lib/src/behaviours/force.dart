@@ -27,6 +27,7 @@ class DirectionalForce extends Behaviour
     _force.setFrom(direction).normalize().scale(weight); 
   }
   
+  @override
   apply(Particle particle) => particle.position.add(_force);
 }
 
@@ -55,6 +56,7 @@ class AttractorForce extends Behaviour
     
   get radius => _radius;
     
+  @override
   apply(Particle particle)
   {
     _tmp.setFrom(target).sub(particle.position);

@@ -61,7 +61,7 @@ class Physics<P extends Particle, S extends Spring<P>>
       applyEffectors(constraints);
     
     // update particles
-    particles.forEach((P p) => p.update());
+    particles.forEach((P p) => p.update(dt));
     
     // remove dead
     particles.removeWhere((P p) => p.state == Particle.DEAD);

@@ -11,8 +11,8 @@ class Particle
 {
   int id = 0;
   int state = ALIVE;
-  int age = 0;
-  int lifetime = -1;
+  num age = 0;
+  num lifetime = -1;
   double drag = 0.03;
   double size = 1.0;
   
@@ -46,9 +46,8 @@ class Particle
   
   Particle(this.id);
   
-  update() 
+  update(num dt) 
   {
-    age++;
     if(state > Particle.ALIVE) return; 
     
     // integrate velocity
@@ -59,6 +58,11 @@ class Particle
     prev.setFrom(tmp_);
     lerp3(prev, position, drag);
     force.setZero();
+    
+    // check if particle died
+    age += dt;
+    if(lifetime > 0 && age >= lifetime)
+      state = Particle.DEAD;
   }
   
   applyForce(Vector3 force) => this.force += force.scale(_invMass);
