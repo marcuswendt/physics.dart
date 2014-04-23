@@ -23,10 +23,10 @@ class Physics<P extends Particle, S extends Spring<P>>
   List<P> particles = [];
   List<S> springs = [];
   
-  Map behaviours = new Map();
+  Map<int, Behaviour<P>> behaviours = new Map();
   
   int constraintIterations = 1;
-  Map constraints = new Map();
+  Map<int, Constraint<P>> constraints = new Map();
   
   int springIterations = 1;
   
@@ -61,10 +61,11 @@ class Physics<P extends Particle, S extends Spring<P>>
       applyEffectors(constraints);
     
     // update particles
-    particles.forEach((P p) => p.update(dt));
-    
-    // remove dead
-    particles.removeWhere((P p) => p.state == Particle.DEAD);
+    for(var p in particles)
+      p.update(dt);
+
+    // check and remove dead
+    particles.removeWhere(checkDeadAndApplyEffectors);
   }
   
   // applies all effectors to the given particle list when their states match
@@ -76,10 +77,24 @@ class Physics<P extends Particle, S extends Spring<P>>
         effector.prepare();
         
         for(P p in particles) {
-          if(p.state == state && !p.isLocked)
+          if(p.state == state)
             effector.apply(p);
         }
       }
     });
+  }
+  
+  // check and remove dead
+  checkDeadAndApplyEffectors(P p) {
+    if(p.state != Particle.DEAD) return false;
+    
+    // apply behaviours to dead particles
+    for(var b in behaviours[Particle.DEAD])
+      b.apply(p);
+    
+    for(var c in constraints[Particle.DEAD])
+      c.apply(p);
+    
+    return true;
   }
 }

@@ -31,7 +31,7 @@ class Particle
   Vector3 force = new Vector3.zero();
 
   // Springs
-  bool isLocked = false;
+  bool get isLocked => state == LOCKED;
 
   // state  
   static const ALIVE = 0;
