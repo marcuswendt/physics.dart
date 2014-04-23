@@ -10,7 +10,7 @@ part of physics;
 class Particle 
 {
   int id = 0;
-  int state = ALIVE;
+  int state = EMITTED;
   num age = 0;
   num lifetime = -1;
   double drag = 0.03;
@@ -34,10 +34,11 @@ class Particle
   bool get isLocked => state == LOCKED;
 
   // state  
-  static const ALIVE = 0;
-  static const LOCKED = 1;
-  static const IDLE = 2;
-  static const DEAD = 3;  
+  static const EMITTED = 0;
+  static const ALIVE = 1;
+  static const LOCKED = 2;
+  static const IDLE = 3;
+  static const DEAD = 4;  
 
   // internal 
   Vector3 tmp_ = new Vector3.zero();

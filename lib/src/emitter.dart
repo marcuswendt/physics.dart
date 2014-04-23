@@ -27,7 +27,7 @@ class Emitter<T extends Particle>
       timer = 0;
       
       int i = 0;
-      while(i < rate && physics.particles.length < max) {
+      while(i < rate) {
         emit();
 //        print("created particle $p id: $id i:$i");        
         i++;
@@ -38,8 +38,10 @@ class Emitter<T extends Particle>
   
   // creates and initialised a single particle
   T emit() {
+    if(physics.particles.length >= max) return null;
+    
     T p = create(id);
-    physics.particles.add(p);
+    physics.particlesNew.add(p);
     init(p);
     id++;
     return p;

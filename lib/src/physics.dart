@@ -21,6 +21,8 @@ class Physics<P extends Particle, S extends Spring<P>>
   Space space;
   Emitter<P> emitter;
   List<P> particles = [];
+  List<P> particlesNew = []; // list of particles emitted during the last update
+  
   List<S> springs = [];
   
   var behaviours = new Map<int, List<Behaviour<P>>>();
@@ -65,7 +67,9 @@ class Physics<P extends Particle, S extends Spring<P>>
       p.update(dt);
 
     // check and remove dead
-    particles.removeWhere(checkDeadAndApplyEffectors);
+    particles.removeWhere(_checkDeadAndApplyEffectors);
+    
+    _addNewAndApplyEffectors();
   }
   
   // applies all effectors to the given particle list when their states match
@@ -85,19 +89,28 @@ class Physics<P extends Particle, S extends Spring<P>>
   }
   
   // check and remove dead
-  checkDeadAndApplyEffectors(P p) {
+  _checkDeadAndApplyEffectors(P p) {
     if(p.state != Particle.DEAD) return false;
-   
-    var applyEffectorsForState = (var list)
-    {
-      if(list == null) return;
-      for(var e in list)
-        e.apply(p);
-    };
-    
-    applyEffectorsForState(behaviours[Particle.DEAD]);
-    applyEffectorsForState(constraints[Particle.DEAD]);
-    
+    _applyEffectorsForState(p, behaviours[Particle.DEAD]);
+    _applyEffectorsForState(p, constraints[Particle.DEAD]);
     return true;
+  }
+  
+  _applyEffectorsForState(P p, var list) {
+   if(list == null) return;
+   for(var e in list)
+     e.apply(p);
+  }
+
+  // add new particles to the list of active particles
+  _addNewAndApplyEffectors() {
+    for(P p in particlesNew) {
+      p.state = Particle.ALIVE;
+      _applyEffectorsForState(p, behaviours[Particle.EMITTED]);
+      _applyEffectorsForState(p, constraints[Particle.EMITTED]);
+    }
+    
+    particles.addAll(particlesNew);
+    particlesNew.clear();
   }
 }
