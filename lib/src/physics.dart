@@ -23,10 +23,10 @@ class Physics<P extends Particle, S extends Spring<P>>
   List<P> particles = [];
   List<S> springs = [];
   
-  Map<int, Behaviour<P>> behaviours = new Map();
+  var behaviours = new Map<int, List<Behaviour<P>>>();
   
   int constraintIterations = 1;
-  Map<int, Constraint<P>> constraints = new Map();
+  var constraints = new Map<int, List<Constraint<P>>>();
   
   int springIterations = 1;
   
@@ -87,13 +87,16 @@ class Physics<P extends Particle, S extends Spring<P>>
   // check and remove dead
   checkDeadAndApplyEffectors(P p) {
     if(p.state != Particle.DEAD) return false;
+   
+    var applyEffectorsForState = (var list)
+    {
+      if(list == null) return;
+      for(var e in list)
+        e.apply(p);
+    };
     
-    // apply behaviours to dead particles
-    for(var b in behaviours[Particle.DEAD])
-      b.apply(p);
-    
-    for(var c in constraints[Particle.DEAD])
-      c.apply(p);
+    applyEffectorsForState(behaviours[Particle.DEAD]);
+    applyEffectorsForState(constraints[Particle.DEAD]);
     
     return true;
   }
